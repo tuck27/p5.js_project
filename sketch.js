@@ -1,61 +1,33 @@
-let stars = [];
-let score = 0;
-
+// variables for the position and color of the circle
+let shapeX;
+let shapeY;
+let shapeColor;
 
 function setup() {
-    createCanvas(600, 400);
-    for (let i = 0; i < 10; i++) {      //generate stars
-        stars.push(newStar());
-    }
+  createCanvas(710, 400);
+
+  // initial position and color of the circle
+  setPositionAndColor();
 }
+
+function setPositionAndColor() {
+  // sets position to a random value (within the canvas)
+  shapeX = random(0, width);
+  shapeY = random(0, height);
+
+  // Set colors to random values in the range
+  shapeColor = color(random(100, 256), random(100, 256), random(100, 256));
+}
+
 function draw() {
-    background(0);  //Black sky
-    for (let star of stars) {        //Update and display stars
-        star.update();
-        star.show();
-    }
-    //Display score
-    fill(255);
-    textSize(24);
-    text("Score:" + score, 10, 30);
+  background(10);
+
+  // Draw a circle at (x,y) with color 
+  fill(shapeColor);
+  ellipse(shapeX, shapeY, 100);
 }
-//Star Class
-class Star {
-    constructor() {
-        this.x = random(width);
-        this.y = random(-200. - 20); //off-screen start
-        this.size = random(10, 20);
-        this.color = color(255, 255, 0); //yellow
-        this.speed = random(2, 5);
-        this.clicked = false; //track if star was clicked
-    }
-    update() {
-        this.y += this.speed;
-        //reset position when off-screen
-        if (this.y > height) {
-            this.y = random(-200, -20);
-            this.x = random(10, 20);
-            this.speed = random(2, 5);
-            this.clicked = false; //track if star was clicked
-        }
-    }
-    show() {
-        fill(this.color);
-        noStroke();
-        ellipse(this.x, this.y, this.size);
-    }
-    checkClick(px, py) {
-        let d = dist(px, py, this.x, this.y);
-        if (d < this.size / 2 && !this.click) {
-            this.color = color(random(255), random(255), random(255)); //change to random color
-            score += 10; //increase score
-            this.clicked = true; //prevent more than one click on a star
-        }
-    }
-}
-//Change color and increase score when clicking a star
+
 function mousePressed() {
-    for (let star of stars) {
-        star.checkClick(mouseX, mouseY);
-    }
+  // On mouse press (re)set the position and color
+  setPositionAndColor();
 }
