@@ -1,19 +1,20 @@
-// variables for the position and color of the circle
+// Variables for the position, color, and size of the circle
 let shapeX;
 let shapeY;
 let shapeColor;
+let shapeSize = 100;
+let score = 0;
+
 
 function setup() {
   createCanvas(710, 400);
-
-  // initial position and color of the circle
   setPositionAndColor();
 }
 
 function setPositionAndColor() {
-  // sets position to a random value (within the canvas)
-  shapeX = random(0, width);
-  shapeY = random(0, height);
+  // Sets position to a random value within the canvas
+  shapeX = random(shapeSize / 2, width - shapeSize / 2);
+  shapeY = random(shapeSize / 2, height - shapeSize / 2);
 
   // Set colors to random values in the range
   shapeColor = color(random(100, 256), random(100, 256), random(100, 256));
@@ -22,12 +23,21 @@ function setPositionAndColor() {
 function draw() {
   background(10);
 
-  // Draw a circle at (x,y) with color 
+  // Draw the circle
   fill(shapeColor);
-  ellipse(shapeX, shapeY, 100);
+  ellipse(shapeX, shapeY, shapeSize);
+
+  // Display the score
+  fill(255);
+  textSize(24);
+  text(`Score: ${score}`, 20, 30);
 }
 
 function mousePressed() {
-  // On mouse press (re)set the position and color
-  setPositionAndColor();
+  // Check if the mouse click is inside the circle
+  let d = dist(mouseX, mouseY, shapeX, shapeY);
+  if (d < shapeSize / 2) {
+    score++; // Increase the score
+    setPositionAndColor(); // Change position and color
+  }
 }
