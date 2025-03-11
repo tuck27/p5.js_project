@@ -39,5 +39,7 @@ function mousePressed() {
   if (d < shapeSize / 2) {
     score++; // Increase the score
     setPositionAndColor(); // Change position and color
+  } else {
+    score--; //decrease the score 
   }
 }
